@@ -57,7 +57,11 @@ class PatientData(object):
 
 	def _collect_demographics(self):
 		''' Collects demographics '''
-		self.demographics = {'address':self.patient_obj.address[0].as_json(), 'first_name':self.patient_obj.name[0].given[0], 'last_name':self.patient_obj.name[0].family[0]}
+		self.demographics = {'address':'{"line":["Unavailable"],"city":"Not Entered"}', 'last_name':"N/A", 'first_name':'N/A'}
+		
+		if self.patient_obj.address != None:
+			if len(self.patient_obj.address) > 0: 
+				self.demographics = {'address':self.patient_obj.address[0].as_json(), 'first_name':self.patient_obj.name[0].given[0], 'last_name':self.patient_obj.name[0].family[0]}
 		
 
 	@staticmethod
