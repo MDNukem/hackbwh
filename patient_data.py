@@ -32,9 +32,10 @@ class PatientData(object):
 		allergy_bundle = Bundle(jsondict=ar.json())
 		allergens_display = []
 
-		for a in allergy_bundle.entry:
-			logging.debug("Found an allergy: "+a.resource.substance.text)
-			allergens_display.append(a.resource.substance.text)
+		if allergy_bundle.entry != None:
+			for a in allergy_bundle.entry:
+				logging.debug("Found an allergy: "+a.resource.substance.text)
+				allergens_display.append(a.resource.substance.text)
 
 		self.allergies = allergens_display
 
@@ -47,11 +48,11 @@ class PatientData(object):
 
 		med_bundle = Bundle(jsondict=mr.json())
 		med_display = []
-
-		for m in med_bundle.entry:
-			logging.debug("Found a medication: "+m.resource.medicationReference.display)
-			med_display.append(m.resource.medicationReference.display)
-
+		if med_bundle.entry != None:
+			for m in med_bundle.entry:
+				logging.debug("Found a medication: "+m.resource.medicationReference.display)
+				med_display.append(m.resource.medicationReference.display)
+		
 		self.medications = med_display
 
 	def _collect_demographics(self):
