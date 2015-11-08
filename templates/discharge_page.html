@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="">
+		<meta name="keywords" content="">
+		<meta name="author" content="Your Name">
+
+		<title>Jason Argonaut</title>
+
+		<!-- Styles
+		================================================== -->
+		<link rel="stylesheet" type="text/css" media="screen" href="http://fonts.googleapis.com/css?family=Open+Sans:400,600">
+		<link rel="stylesheet" type="text/css" media="screen" href="/static/snapshot/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" media="screen" href="/static/snapshot/css/bootstrap-responsive.min.css">
+		<link rel="stylesheet" type="text/css" media="screen" href="/static/snapshot/css/font-awesome.min.css">
+		<link rel="stylesheet" type="text/css" media="screen" href="/static/snapshot/css/derek.css">
+		<link rel="stylesheet" type="text/css" media="screen" href="/static/snapshot/css/custom.css">
+
+		<link rel="shortcut icon" href="/static/snapshot/css/favicon.ico">
+
+		<!-- IE support
+		================================================== -->
+		<!--[if lt IE 9]>
+			<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+			<script src="js/css3-mediaqueries.js"></script>
+		<![endif]-->
+		<!--[if IE 7]>
+			<link rel="stylesheet" href="css/font-awesome-ie7.min.css">
+		<![endif]-->
+	</head>
+
+	<body>
+		<div class="container-fluid wrapper">
+
+			<!-- Heading 
+			================================================== -->
+			<div class="row-fluid heading">
+				
+				<div class="span8">
+					<img class="my-picture" src="/static/snapshot/img/default_user_picture.png" alt="Photo of Your Name">
+					<h1 class="my-name">{% if discharge_data %} {% if discharge_data.demographics.first_name %}{{discharge_data.demographics.first_name}}{% endif %} {%if discharge_data.demographics.last_name %} {{discharge_data.demographics.last_name}}{% endif %}{% endif %}</h1>
+					<h2 class="my-profession">M, Age 23, 08/01/1985</h2>
+					<p class="my-message">
+						<i class="icon-comment-alt"></i>&nbsp;This document has been prepared automatically after {% if discharge_data %} {% if discharge_data.demographics.first_name %}{{discharge_data.demographics.first_name}}{% endif %} {%if discharge_data.demographics.last_name %} {{discharge_data.demographics.last_name}}{% endif %}{% endif %} was seen at Man's Greatest Hospital and discharged on November 8, 2015.
+					</p>
+				</div>
+
+				<div class="span4">
+          <h2 class="my-services">
+            <i class="icon-cogs"></i>&nbsp;Demographics
+            <a class="my-tooltip" href="#" data-original-title="Download as PDF">
+              <i class="icon-download-alt"></i>
+            </a>
+          </h2>
+          <p class="my-servicetext">
+          	{% if discharge_data %}
+          	{% if discharge_data.demographics.address.line %}
+          	
+          	{% for line in discharge_data.demographics.address.line %}
+          		{{line}} <br/>
+          	{% endfor %}
+          	{% endif %}
+
+          	{{discharge_data.demographics.address.city}}, {{discharge_data.demographics.address.state}} {{discharge_data.demographics.address.postalCode}} {{discharge_data.demographics.address.country}}
+
+          	{% endif %}
+            <br/>
+            <br/><b>Home Phone:</b> 608-271-9000 <br/>
+            Married
+          </p>
+				</div>
+
+			</div>
+
+			<!-- Resume 
+			================================================== -->
+			<div class="row-fluid resume">
+
+				<!-- column 1 -->
+				<div class="span4">
+					<h3 class="my-caption">Diagnosis</h3>
+					<h4 class="my-activity">Discharge</h4>
+					<h5 class="my-venture">Acute Appendicitis</h5>
+					<h4 class="my-activity">Comorbidities</h4>
+					<h5 class="my-venture">None</h5>
+
+					<h3 class="my-caption">Outstanding Tests</h3>
+					<h4 class="my-activity">Radiology</h4>
+					<h5 class="my-venture">Chest X-Ray <span>Nov 10, 2015</span></h5>
+					<h4 class="my-activity">Laboratory</h4>
+					<h5 class="my-venture">INR <span>Nov 10, 2015</span></h5>
+					
+
+					<h3 class="my-caption">Scheduled Appointments</h3>
+					<h4 class="my-activity">PCP</h4>
+					<h5 class="my-venture">Dr. PCP<span>drpcp@pcpftw.com</span></h5>
+					<h4 class="my-activity">Specialty</h4>
+					<h5 class="my-venture">Dr. Specialty<span>doc@surgerymonkey.com</span></h5>
+				</div>
+
+				<!-- column 2 -->
+				<div class="span4">
+					<h3 class="my-caption">Primary Caregiver</h3>
+					<h4 class="my-activity">Dr. PCP</h4>
+					<h5 class="my-venture">200 Harrison Ave<br/>Boston, MA 02111</h5>
+					<p  class="my-specifics">
+						123-444-3982
+					</p>
+					
+					<h3 class="my-caption">Hospital Team</h3>
+					<h4 class="my-activity">Primary Contact</h4>
+					<h5 class="my-venture">Dr. Surgeon <span>455-394-5938</span></h5>
+					<p  class="my-specifics">
+
+					<h3 class="my-caption">Outstanding Services</h3>
+					<h4 class="my-activity">Rehabilitation</h4>
+					<h4 class="my-activity">VNA</h4>
+					<h4 class="my-activity">Hospice</h4>
+					<h4 class="my-activity">Meals on Wheels</h4>
+					<p  class="my-specifics">
+						
+					</p>
+				</div>
+
+				<!-- column 3 -->
+				<div class="span4">
+					<h3 class="my-caption">Medication List</h3>
+					
+					{% if discharge_data %}
+					{% if discharge_data.medications %}
+					{% for medication in discharge_data.medications %}
+					<h4 class="my-skill">
+						{{medication}}
+						<span>100 mg x 3/day</span>
+					</h4>
+					<br/>
+					{% endfor %}
+					{% endif %}
+					{% endif %}
+					
+
+					<h3 class="my-caption">Allergies</h3>
+					{% if discharge_data %}
+					{% if discharge_data.allergies %}
+					{% for allergy in discharge_data.allergies %}
+					<h4 class="my-skill">
+						{{allergy}}
+						<span>the reaction</span>
+					</h4>
+					<br/>
+					{% endfor %}
+					{% endif %}
+					{% endif %}
+
+					<h3 class="my-caption">Primary Pharmacy</h3>
+					<h4 class="my-skill">
+						1 CVS Drive<br>
+						Woonsocket, RI 02895
+						<br><br>
+						345-394-3928
+
+					</h4>
+					
+				</div>
+
+			</div><!-- end of resume -->
+
+
+			<!-- Contact 
+			================================================== -->
+			<h3 class="my-caption">Primary Care Physician Location</h3>
+
+			<!-- google map container -->
+			<div id="my-location"></div>
+
+			<div class="row-fluid contact">
+
+				<!--column 1 -->
+				<div class="span4">
+					<h3 class="my-caption">Brought to you by</h3>
+					<div class="media">
+  						<div class="media-left">
+    					<a href="#">
+      						<img class="media-object" src="/static/snapshot/img/generic-hospital-logo.png" alt="Hospital logo">
+    					</a>
+  						</div>
+  					</div>
+				</div>
+
+				<!--column 2 -->
+				<div class="span4">
+
+				</div>
+
+				<!--column 3 -->
+				<div class="span4">
+
+					
+					<h3 class="my-caption">Contact Me</h3>
+					<h4 class="my-info">
+						<i class="icon-phone"></i> Phone
+						<span>345-859-4920</span>
+					</h4>
+					<h4 class="my-info">
+						<i class="icon-envelope"></i> Email
+						<span>
+							<a href="mailto:#">drsurgeon@hcmc.org</a>
+						</span>
+					</h4>
+					<h4 class="my-info">
+						<h4 class="my-info">&nbsp;<span>730 S 8th St</span></h4>
+						<h4 class="my-info">&nbsp;<span>Minneapolis</span></h4>
+						<h4 class="my-info">&nbsp;<span>MN, 55415</span></h4>
+					</h4>
+
+				</div>
+
+			</div><!-- end of contact -->
+
+		</div><!-- end of container -->
+
+		<!-- Javascript 
+		================================================== -->
+		<script src="http://maps.googleapis.com/maps/api/js?sensor=false" type="text/javascript"></script>
+		<script src="/static/snapshot/js/jquery-1.9.1.min.js"></script>
+		<script src="/static/snapshot/js/jquery.masonry.min.js"></script>
+		<script src="/static/snapshot/js/bootstrap.min.js"></script>
+		<script src="/static/snapshot/js/derek.js"></script>
+
+	</body>
+</html>

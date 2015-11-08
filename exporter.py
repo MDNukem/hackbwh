@@ -17,6 +17,26 @@ class DBManager(object):
 	def store_data(self, data):
 		self.client.CreateDocument(self.coll['_self'], data)
 
+	def read_data(self, docid):
+		''' Returns the 1 document matching the document id, or None if it cannot be found.
+		'''
+
+		result = self.client.QueryDocuments(self.coll['_self'],
+		{
+                'query': 'SELECT * FROM root r WHERE r.id=@doc_id',
+                'parameters': [
+                    { 'name':'@doc_id', 'value':str(docid) }
+                ]
+        })
+
+		documents = list(result)
+		if len(documents) > 0:
+			return documents[0]
+		else:
+			return None
+
+		
+
 class FhirParser(object):
 	@staticmethod
 	def parse_response(response):
@@ -158,7 +178,7 @@ class Exporter(object):
 		return resource
 
 
-	def collect_data(self):
+	def collect_data(self, sendto="bwhhackrrap@gmail.com"):
 		'''Collects all of the data that we want the PCP to access and stores it in our DB 
 		'''
 		dbm = DBManager()
@@ -166,9 +186,18 @@ class Exporter(object):
 		doc_to_push = pd.collect_all()
 		doc_to_push['id'] = str(uuid.uuid4())
 		dbm.store_data(doc_to_push)
+		self._send_email(doc_to_push['id'], sendto)
 
-	def _send_email(self):
-		pass
+	def _send_email(self, uuid_to_send, recipient="bwhhackrrap@gmail.com"):
+		
+		r = requests.post(
+        settings.MAIL_ENDPOINT,
+        auth=settings.MAIL_AUTH,
+        data={"from": "Mailgun Sandbox <postmaster@sandbox6db6e8f7e49b43d998cd964d1169a560.mailgun.org>",
+              "to": recipient,
+              "subject": "A live demo email!",
+              "text": "Wow, such bravery.  Your patient's discharge summary is located at http://127.0.0.1:5000/discharges/"+str(uuid_to_send)})
         
+
 
 

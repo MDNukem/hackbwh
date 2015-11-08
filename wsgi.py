@@ -3,6 +3,7 @@ from flask import render_template
 from flask import request, redirect, url_for
 import settings, logging
 from exporter import Exporter
+from importer import Importer
 from exporter import FhirParser
 
 app = Flask(__name__)
@@ -34,12 +35,22 @@ def export_patient():
 @app.route("/send", methods=['GET'])
 def send_doc():
 	patient_id = request.args.get('pt_id','')
+	recipient = request.args.get('addr','')
 	logging.debug("Sending email for patient id "+patient_id)
 	exporter = Exporter(patient_id)
-	exporter.collect_data()
+	exporter.collect_data(recipient)
 
 	return render_template('success_page.html')
 
+@app.route("/discharges/<uuid>", methods=['GET'])
+def get_discharge_page(uuid):
+	data_importer = Importer()
+	snapshot_data = data_importer.retrieve_snapshot_data(uuid)
+	if snapshot_data == None:
+		return render_template('patient_not_found.html')
+	else:
+		logging.debug(str(snapshot_data))
+		return render_template('discharge_page.html', discharge_data=snapshot_data)
 
 if __name__ == "__main__":
 	logging.basicConfig(level=logging.DEBUG)
