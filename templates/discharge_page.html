@@ -7,7 +7,7 @@
 		<meta name="keywords" content="">
 		<meta name="author" content="Your Name">
 
-		<title>Jason Argonaut</title>
+		<title>{% if discharge_data %} {% if discharge_data.demographics.first_name %}{{discharge_data.demographics.first_name}}{% endif %} {%if discharge_data.demographics.last_name %} {{discharge_data.demographics.last_name}}{% endif %}{% endif %}</title>
 
 		<!-- Styles
 		================================================== -->
