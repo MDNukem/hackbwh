@@ -196,7 +196,7 @@ class Exporter(object):
         data={"from": "Mailgun Sandbox <postmaster@sandbox6db6e8f7e49b43d998cd964d1169a560.mailgun.org>",
               "to": recipient,
               "subject": "A live demo email!",
-              "text": "Wow, such bravery.  Your patient's discharge summary is located at http://127.0.0.1:5000/discharges/"+str(uuid_to_send)})
+              "text": "Wow, such bravery.  Your patient's discharge summary is located at http://hackdemo.nukemdesign.com/discharges/"+str(uuid_to_send)})
         
 
 
